@@ -40,11 +40,26 @@ namespace graphic_editor
             {
                 isDrawing = true;
                 startPoint = e.Location;
+                canvas.ClearTemporaryShape();
             }
         }
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
+            if (isDrawing && toolManager.CurrentTool != "Select")
+            {
+                canvas.ClearTemporaryShape();
+
+                var tempShape = CreateShapeFromPoints(startPoint, e.Location);
+                if (tempShape != null)
+                {
+                    tempShape.StrokeColor = toolManager.CurrentColor;
+                    tempShape.StrokeWidth = toolManager.CurrentStrokeWidth;
+                    tempShape.Opacity = 0.5f; 
+                    canvas.TemporaryShape = tempShape;
+                    Invalidate(); 
+                }
+            }
         }
 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
@@ -52,6 +67,8 @@ namespace graphic_editor
             if (isDrawing && toolManager.CurrentTool != "Select")
             {
                 isDrawing = false;
+
+                canvas.ClearTemporaryShape();
 
                 var shape = CreateShapeFromPoints(startPoint, e.Location);
                 if (shape != null)

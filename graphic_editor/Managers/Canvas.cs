@@ -11,6 +11,7 @@ namespace graphic_editor.Managers
     {
         public List<Shape> Shapes { get; private set; } = new List<Shape>();
         public Shape SelectedShape { get; set; } = null;
+        public Shape TemporaryShape { get; set; } = null;
 
         public void AddShape(Shape shape)
         {
@@ -30,6 +31,7 @@ namespace graphic_editor.Managers
             {
                 shape.Draw(g);
             }
+            TemporaryShape?.Draw(g);
         }
 
         public Shape SelectShape(Point point)
@@ -54,6 +56,11 @@ namespace graphic_editor.Managers
             }
 
             return null;
+        }
+
+        public void ClearTemporaryShape()
+        {
+            TemporaryShape = null;
         }
     }
 }

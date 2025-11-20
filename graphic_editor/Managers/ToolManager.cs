@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace graphic_editor.Managers
 {
-    internal class ToolManager
+    public class ToolManager
     {
         public string CurrentTool { get; set; } = "Select";
         public Color CurrentColor { get; set; } = Color.Black;
